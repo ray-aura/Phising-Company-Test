@@ -1,6 +1,7 @@
 const express = require('express')
 const sqlite3 = require('sqlite3').verbose()
 const cors = require('cors')
+const path = require('path');
 
 
 const db = new sqlite3.Database('users.db', (err) => {
@@ -15,9 +16,19 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+
+
 
 app.post('/add', express.json(), (req, res) => {
 
+    console.log('Received data:', req.body)
     let data = req.body.credentials
     const stmt = db.prepare('INSERT INTO users (email, password) VALUES (?, ?)')  
 
@@ -37,6 +48,8 @@ app.post('/add', express.json(), (req, res) => {
 })  
 
 
+
+
 app.get('/users/:pass', (req, res) => {
     const password = req.params.pass
 
@@ -54,6 +67,7 @@ app.get('/users/:pass', (req, res) => {
         res.status(403).json({ error: 'Unauthorized access' })  
     }       
 })
+
 
 
 app.listen(3000, () => {
